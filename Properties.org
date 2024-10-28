@@ -1,0 +1,40 @@
+#+title: Alpro dump notes
+
+* Programming Algorithm 
+** Metadata 
+*** lecturer - Isa Mulia Insan [SMS]
+
+*** textbook - 
+    - think like a programmer: an introduction to creative problem solvim (1st edition)
+    - schaum's outline of programming with c++ [[https://github.com/sharaf-qeshta/Introduction-to-Java-Programming-and-Data-Structures-Comprehensive-Version-Eleventh-Edition-Global-/tree/main/Chapter_01][latihan java]](2nd edition)
+
+*** class schedule - 
+**** [#A] Class - Alpro
+     SCHEDULED: <2024-09-23 Mon 10:00-12:30 ++1w>
+
+** Content
+*** homework 
+**** Week 1 
+***** DONE [#B] W1 - Membuat instruksi
+      DEADLINE: <2024-09-22 Sun> CLOSED: [2024-09-20 Fri 23:06]
+***** DONE [#B] W1 - Latihan Coding 
+      SCHEDULED: <2024-09-22 Sun> CLOSED: [2024-09-20 Fri 23:07]
+***** ASSIGNMEN [#C] W1 - Membuat Kelompok 3-4 orang 
+      SCHEDULED: <2024-09-24 Tue>
+  
+*** notes - 
+
+* Programming Algorithm (practicum)
+** Metadata 
+*** lecturer - Isa Mulia Insan [MNG]
+
+*** textbook - 
+
+*** class schedule - 
+**** [#A] Class - Alpro(practic)
+     SCHEDULED: <2024-09-26 Thu 15:00-17:30 ++1w>
+ 
+*** homework - 
+
+*** notes - 
+

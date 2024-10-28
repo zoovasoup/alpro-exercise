@@ -1,0 +1,64 @@
+* cara melakukan kompilasi JAVA 
+  - pastikan sudah terinstal java development kit(JDK) pada device yang kita ingin gunakan untuk compiling dengan cara 
+    -buka terminal lalu ketik `javac -version`  
+  - setelah itu nanti akan muncul berapa versi JDK yang terinstal pada device tersebut 
+  - jika tidak muncul versi JDK, maka kita karus menginstall JDK terlebih dahulu 
+  - kemudian setelah kita pastikan kita memiliki JDK di device yang akan kita gunakan, kita bisa lanjutkan untuk compile file java dengan caraa: 
+    - buka terminal 
+    - navigasi ke target directory dimana kita menyimpan file java untuk di compile dengan `cd` ke path dimana anda menyimpan file java 
+    - setelah kita berada di directory tempat kita menyimpan file java selanjutnya kita bisa mengcompile file java dengan mengetik command `javac your_file.java` 
+      *dimana `your_file.java` merupakan nama file java yang akan kita compile 
+    - setelah itu kita tunggu dan jika program anda tidak ada error maka anda sudah berhasil meng-compile file java ditandai dengan adanya file `your_file.class` di directory dimana anda meng-compile file java anda 
+
+* - programmer adalah orang yang membuat atau menulis program menggunakan kode/bahasa komputer. sedangkan program adalah kumpulan algoritma atau instruksi sistematis yang ditulis oleh programmer dan dijalankan oleh komputer untuk mencapai tujuan tertentu. 
+  - compiler adalah tools untuk mentranslate kode/program yang ditulis oleh programmer ke bahasa lain dan mengghasilkan executable file baru sehingga kode/program tersebut dapat dijalankan oleh komputer sedangkan compile/compiling adalah prosese mentranslate kode/program tersebut ke bahasa komputer. compiled language adalah bahasa yang menggunakan proses compilation sehingga kita tidak bisa langsung menjalankan program tetapi harus mengcompile kode terlebih dahulu untuk dapat menjalakan kode program.
+  contoh compiled language adalah: rust, c, c++, java, typescript, golang
+  - interpreter adalah tools untuk mengranslate dan menjalankan kode line-by-line secara langsung tanpa mengghasilkan executable file baru. interpreted language adalah bahasa yang menggunakan proses interpretation sehingga program dapat dijalankan secara langsung 
+  contoh interpreted language adalah: lua, python, javascript
+
+* kode java 
+  #+begin_src java
+    public class SoalNoEmpat {
+      public static void main(String[] args){
+        System.out.println("Welcome to Java\nim telkom university student\ni think, Programming is Fun");
+      }
+  }
+#+end_src
+
+* kode java 
+  #+begin_src java 
+    public class SoalNoLima {
+      public static void main(String[] args) {
+        double result = 7.5 * 6.5 - 4.5 * 3 / 47.5 - 5.5;
+
+        System.out.println(result);
+      }
+    }
+#+end_src
+
+* kode java
+  #+begin_src java
+    public class SoalNoEnam{
+      public static void main(String[] args) {
+        int umur = 20;
+        double tinggi = 175.5;
+        String nama = "Andi";
+
+        System.out.println("Nama: "+nama+"\nUmur: "+umur+" tahun\nTinggi "+tinggi+" cm");
+      }
+    }
+#+end_src
+
+* kode java 
+  #+begin_src java
+    public class SoalNoEnam{
+      public static void main(String[] args){
+        int totalSum = 0;
+        for (int i = 1; i <= 10; i++) {
+          totalSum += i;
+        }
+
+        System.out.println("Hasil penjumlahan deret adalah: "+totalSum);
+      }
+    }
+    #+end_src
