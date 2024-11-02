@@ -9,24 +9,21 @@ public class soal4 {
     primeNumber[0] = false;
     primeNumber[1] = false;
 
-    int i = 2;
-    while (i * i <= n) {
+    for (int i = 2; i * i < n; i++) {
       if (primeNumber[i]) {
-        int multipleNumber = i;
+        int multipleNumber = i * i;
         while (multipleNumber <= n) {
           primeNumber[multipleNumber] = false;
           multipleNumber += i;
         }
       }
-      i++;
     }
 
-    i = 2;
-    while (i <= n) {
-      if (primeNumber[i]) {
-        System.out.print(i + " ");
+    for (int j = 2; j < n; j++) {
+      if (primeNumber[j]) {
+        System.out.print(j + " ");
       }
-      i++;
     }
+
   }
 }
