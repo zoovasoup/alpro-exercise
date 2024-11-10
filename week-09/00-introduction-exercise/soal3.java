@@ -1,8 +1,5 @@
 import java.util.Scanner;
 
-/**
- * soal3
- */
 public class soal3 {
   public static void tampilkanMenuKopi() {
     System.out.println("====== MENU KOPI ======");
