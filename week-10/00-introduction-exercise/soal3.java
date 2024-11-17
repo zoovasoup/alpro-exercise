@@ -24,7 +24,7 @@ public class soal3 {
   }
 
   public static boolean cumlaude(double a, int b, boolean c) {
-    return (a > 3.50 && a < 4.10 && b <= 8 && c);
+    return (a >= 3.51 && a <= 4.00 && b <= 8 && c);
   }
 
   public static boolean sangatMemuaskan(double a, int b, boolean c) {
