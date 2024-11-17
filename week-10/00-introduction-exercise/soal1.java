@@ -9,16 +9,14 @@ public class soal1 {
     int b = input.nextInt();
     input.close();
 
-    System.out.printf("%.3f %.3f", penghitung(a, b), penghitung2(a, b));
+    System.out.printf("%.3f %.3f", hitung1(a, b), hitung2(a, b));
   }
 
-  public static Double penghitung(int a, int b) {
-    double result = Math.sqrt(9 * a / 2.0);
-    return result;
+  public static double hitung1(int a, int b) {
+    return Math.sqrt(9 * a / 2.0);
   }
 
-  public static Double penghitung2(int a, int b) {
-    double result = Math.sqrt(9 * b / 2.0);
-    return result;
+  public static double hitung2(int a, int b) {
+    return Math.sqrt(9 * b / 2.0);
   }
 }
