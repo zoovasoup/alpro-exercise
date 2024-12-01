@@ -12,7 +12,7 @@ public class soal1 {
     System.out.printf("%.3f %.3f", hitung(a, b), hitung(b, a));
   }
 
-  public static double hitung(int a, int b) {
-    return Math.sqrt(9 * a / 2.0);
+  public static double hitung(int x, int y) {
+    return Math.sqrt(9 * x / 2.0);
   }
-}
+
