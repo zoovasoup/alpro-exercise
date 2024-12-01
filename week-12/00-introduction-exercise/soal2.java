@@ -14,14 +14,11 @@ public class soal2 {
     }
 
     for (int i = 0; i < numberList.length - 1; i++) {
-      String result = "";
-      if (numberList[i] > numberList[10]) {
-        result = "greater";
-      } else if (numberList[i] < numberList[10]) {
-        result = "smaller";
-      } else {
-        result = "equals";
-      }
+
+      String result = (numberList[i] > numberList[10]) ? "greater"
+          : (numberList[i] < numberList[10]) ? "smaller"
+              : "equal";
+
       System.out.printf("\n%d is %s than %d", numberList[i], result, numberList[10]);
     }
   }

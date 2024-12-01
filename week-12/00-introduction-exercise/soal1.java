@@ -34,6 +34,9 @@ public class soal1 {
         equalAvg++;
       }
 
+      belowAvg += (score[i] < average) ? 1 : 0;
+      aboveAvg += (score[i] > average) ? 1 : 0;
+      equalAvg += (score[i] == average) ? 1 : 0;
     }
 
     System.out.printf("%d scores above the average\n", aboveAvg);
