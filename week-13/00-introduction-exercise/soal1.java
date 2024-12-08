@@ -17,9 +17,9 @@ public class soal1 {
   public static void bacaArray(int[] number) {
     Scanner in = new Scanner(System.in);
     for (int i : number) {
-      System.out.print("Masukkan angka: ");
+      System.out.print("Masukkan bilangan: ");
       number[totalIndex] = in.nextInt();
-      if (number[totalIndex] < 0)
+      if (number[totalIndex] <= 0)
         break;
 
       totalIndex++;
