@@ -17,33 +17,42 @@
  */
 import java.util.Scanner;
 
+@SuppressWarnings("resource") // Suppress resource warnings.
+
 public class kesehatan {
-  public static String[][] data = new String[4][10];
+  public static String[][] dataPasien = new String[4][10];
+  public static String[] dataDokter = new String[] { "dani", "budi", "anita", "citra" };
 
   public static void main(String[] args) {
-    Scanner in = new Scanner(System.in);
 
     while (true) {
+      Scanner in = new Scanner(System.in);
       menu();
       System.out.print("Pilih menu: ");
-      int pilihMenu = in.nextInt();
+      String pilihMenu = in.next();
       in.nextLine();
 
       switch (pilihMenu) {
-        case 1:
+        case "1":
           inputData();
-        case 2:
-          editData();
-        case 3:
-          hitungHarga();
-        case 4:
-          tampilData();
-        case 5:
-          tampilTerbesar();
-        case 6:
           break;
+        case "2":
+          editData();
+          break;
+        case "3":
+          hitungHarga();
+          break;
+        case "4":
+          tampilData();
+          break;
+        case "5":
+          tampilTerbesar();
+          break;
+        case "6":
+          return;
         default:
           System.out.println("Menu tidak tersedia");
+          break;
       }
     }
   }
@@ -66,26 +75,74 @@ public class kesehatan {
     System.out.println("Ingin input berapa data? (max 10)");
     int jumlahData = in.nextInt();
 
-    for (int i = 0; i < jumlahData; i++) {
-      for (int j = 0; j < 4; j++) {
-        if (data[i][0] == "") {
-          System.out.print("Masukkan nama pasien: ");
-          data[i][0] = in.next();
-          System.out.print("Masukkan nama dokter: ");
-          data[i][1] = in.next();
-          System.out.print("Masukkan jam masuk: ");
-          data[i][2] = in.next();
-          System.out.print("Masukkan jam keluar: ");
-          data[i][3] = in.next();
-          System.out.println("");
-        }
-      }
+    if (jumlahData > 10 || jumlahData <= 0) {
+      System.out.println("Jumlah data harus antara 1 dan 10.");
+      return;
     }
-    in.close();
+
+    for (int i = 0; i < jumlahData; i++) {
+      System.out.print("Masukkan nama pasien: ");
+      dataPasien[0][i] = in.next();
+
+      dataPasien[1][i] = inputDokter(in, "Masukkan nama dokter: ");
+      dataPasien[2][i] = inputJam(in, "Masukkan jam masuk (format 24H HH:mm): ");
+      dataPasien[3][i] = (inputJam(in, "Masukkan jam keluar (format 24H HH:mm): "));
+
+      if (dataPasien[2][i].compareTo(dataPasien[3][i]) > 0) {
+        do {
+          System.out.println("Jam keluar harus lebih besar dari jam masuk.");
+          dataPasien[3][i] = (inputJam(in, "Masukkan jam keluar (format 24H HH:mm): "));
+        } while (dataPasien[2][i].compareTo(dataPasien[3][i]) > 0);
+      }
+
+      System.out.println("\n Data berhasil dimasukkan.");
+    }
   }
 
-  public static void inputDataValitation(String validate) {
+  public static String inputDokter(Scanner in, String message) {
+    String dokter;
+    boolean validateDokter = false;
 
+    System.out.println("dokter yang tersedia: ");
+    for (String i : dataDokter) {
+      System.out.printf(" - Dr.%s \n", i.toUpperCase());
+    }
+
+    do {
+      System.out.print(message);
+      dokter = in.next().trim().toLowerCase();
+
+      for (String i : dataDokter) {
+        if (dokter.equals(i)) {
+          validateDokter = true;
+          break;
+        }
+      }
+
+      if (!validateDokter) {
+        System.out.println("nama dokter tidak ada di database");
+      }
+
+    } while (!validateDokter);
+
+    return dokter;
+  }
+
+  public static String inputJam(Scanner in, String message) {
+    String jam;
+    boolean validateJam = false;
+
+    do {
+      System.out.print(message);
+      jam = in.next();
+      validateJam = jam.matches("^([01]?[0-9]|2[0-3]):[0-5][0-9]$");
+
+      if (!validateJam) {
+        System.out.println("format jam salah");
+      }
+    } while (!validateJam);
+
+    return jam;
   }
 
   // fungsi edit data - zulfa
