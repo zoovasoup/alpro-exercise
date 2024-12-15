@@ -20,6 +20,7 @@
  * total biaya: ....
  *
  */
+
 public class tampilData {
   public static String[][] data = new String[5][5]; // global var untuk data
 

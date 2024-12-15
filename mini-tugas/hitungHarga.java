@@ -25,9 +25,9 @@ public class hitungHarga {
   public static String[][] data = new String[5][5]; // global var untuk data
 
   public static void main(String[] args) {
-    dataFill(); // bikin di bawah ini...
-
-    printHarga(); // bikin di atas ini...
+    dataFill(); // mengisi data pasien
+    hitungBiaya(); // menghitung harga konsultasi
+    printHarga(); // menampilkan harga
   }
 
   public static void dataFill() {
@@ -67,9 +67,37 @@ public class hitungHarga {
     data[4][4] = "";
   }
 
+  public static void hitungBiaya() {
+    for (int i = 0; i < data.length; i++) {
+      // Mengubah jam dan menit dari string ke integer
+      int jamMasuk = Integer.parseInt(data[i][2].substring(0, 2));
+      int menitMasuk = Integer.parseInt(data[i][2].substring(2, 4));
+      int jamKeluar = Integer.parseInt(data[i][3].substring(0, 2));
+      int menitKeluar = Integer.parseInt(data[i][3].substring(2, 4));
+
+      // Menghitung total menit
+      int totalMenitMasuk = jamMasuk * 60 + menitMasuk;
+      int totalMenitKeluar = jamKeluar * 60 + menitKeluar;
+      int durasi = totalMenitKeluar - totalMenitMasuk;
+
+      // Menghitung biaya
+      int biaya = 0;
+      if (durasi > 0) {
+        biaya = 50000; // Biaya untuk 60 menit pertama
+        if (durasi > 60) {
+          int menitTambahan = durasi - 60;
+          biaya += (int) Math.ceil(menitTambahan / 30.0) * 10000; // Biaya untuk setiap 30 menit tambahan
+        }
+      }
+
+      // Menyimpan biaya ke dalam data
+      data[i][4] = String.valueOf(biaya);
+    }
+  }
+
   public static void printHarga() {
     for (int i = 0; i < data.length; i++) {
-      System.out.println("Total Biaya: " + data[i][4]);
+      System.out.println("Pasien: " + (data[i][0]) + " " + (data[i][4]));
     }
   }
 }

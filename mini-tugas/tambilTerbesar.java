@@ -19,11 +19,27 @@
  *
  */
 public class tambilTerbesar {
-  public static String[][] data = new String[5][5]; // global var untuk data
+  public static String[][] data = new String[5][5];
 
   public static void main(String[] args) {
-    dataFill(); // bikin di bawah ini...
+    dataFill();
+    int maxFee = 0;
 
+    for (int i = 0; i < data.length; i++) {
+      int fee = Integer.parseInt(data[i][4]);
+      if (fee > maxFee) {
+        maxFee = fee;
+      }
+    }
+
+    System.out.println("Pasien dengan biaya konsultasi terbesar:");
+    for (int i = 0; i < data.length; i++) {
+      int fee = Integer.parseInt(data[i][4]);
+      if (fee == maxFee) {
+        System.out.println("Nama: " + data[i][0] + ", Dokter: " + data[i][1] + ", Waktu Mulai: " + data[i][2]
+            + ", Waktu Selesai: " + data[i][3] + ", Biaya: " + data[i][4]);
+      }
+    }
   }
 
   // untuk dummy data
@@ -33,21 +49,21 @@ public class tambilTerbesar {
     data[0][1] = "Dr. Dani";
     data[0][2] = "08.15";
     data[0][3] = "09.30";
-    data[0][4] = "50000";
+    data[0][4] = "80000";
 
     // Data pasien 1
     data[1][0] = "Andi";
     data[1][1] = "Dr. Budi";
     data[1][2] = "08.20";
     data[1][3] = "10.00";
-    data[1][4] = "30000";
+    data[1][4] = "80000";
 
     // Data pasien 2
     data[2][0] = "Siti";
     data[2][1] = "Dr. Anita";
     data[2][2] = "09.00";
     data[2][3] = "11.00";
-    data[2][4] = "40000";
+    data[2][4] = "80000";
 
     // Data pasien 3
     data[3][0] = "Rudi";

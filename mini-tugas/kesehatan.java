@@ -1,27 +1,16 @@
-
-/**
- * kesehatan
- *
- * pengguna melakukan input dan menghapus data nama pasien, nama dokter, jam
- * masuk, jam keluar.
- *
- * pengguna harus bisa melakukan pengubahan data dokter, jam masuk, jam keluar.
- *
- * data harga konsulatasi muncul dengan perhitungan 60 menit awal = Rp50.000 dan
- * 30 menit selanjutnya = Rp10.000 dengan pembulatan waktu ke atas (contoh: 31
- * menit Rp20.000).
- *
- * pengguna bisa menampilkan nama pasien beserta data konsultasinya.
- *
- * pengguna bisa menampilkan nama pasien dengan bayaran terbesar.
- */
 import java.util.Scanner;
 
 @SuppressWarnings("resource") // Suppress resource warnings.
 
 public class kesehatan {
   public static String[][] dataPasien = new String[4][10];
-  public static String[] dataDokter = new String[] { "dani", "budi", "anita", "citra" };
+  public static String[] dataDokter = new String[] {
+      "budi",
+      "citra",
+      "",
+      "",
+      "dani"
+  };
 
   public static void main(String[] args) {
 
@@ -34,13 +23,13 @@ public class kesehatan {
 
       switch (pilihMenu) {
         case "1":
-          inputData();
+          inputData(in);
           break;
         case "2":
-          editData();
+          editDataDokter(in);
           break;
         case "3":
-          hitungHarga();
+          editData(in);
           break;
         case "4":
           tampilData();
@@ -59,43 +48,45 @@ public class kesehatan {
 
   // fungsi tampilan menu
   public static void menu() {
-    System.out.println("Menu:");
+    System.out.print("\033[H\033[2J");
+    System.out.flush();
+    System.out.println("\n====================================");
+    System.out.println("========== Sistem Kesehatan ========");
+    System.out.println("====================================");
     System.out.println("1. Input data");
-    System.out.println("2. Edit data");
-    System.out.println("3. Hitung harga");
+    System.out.println("2. Edit data dokter");
+    System.out.println("3. Edit data pasien");
     System.out.println("4. Tampil data");
     System.out.println("5. Tampil bayaran terbesar");
     System.out.println("6. Keluar");
+    System.out.println("====================================");
   }
 
   // fungsi input data
-  public static void inputData() {
-    Scanner in = new Scanner(System.in);
+  public static void inputData(Scanner in) {
 
-    System.out.println("Ingin input berapa data? (max 10)");
-    int jumlahData = in.nextInt();
+    for (int i = 0; i < dataPasien.length; i++) {
+      if (dataPasien[i][0] == "" || dataPasien[i][0] == null) {
+        System.out.println("\n====================================");
+        System.out.print("Masukkan nama pasien: ");
+        dataPasien[i][0] = in.next();
 
-    if (jumlahData > 10 || jumlahData <= 0) {
-      System.out.println("Jumlah data harus antara 1 dan 10.");
-      return;
-    }
+        System.out.println("\n====================================");
+        dataPasien[i][1] = inputDokter(in, "Masukkan nama dokter: ");
+        System.out.println("\n====================================");
+        dataPasien[i][2] = inputJam(in, "Masukkan jam masuk (format 24H HH:mm): ");
+        System.out.println("\n====================================");
+        dataPasien[i][3] = (inputJam(in, "Masukkan jam keluar (format 24H HH:mm): "));
 
-    for (int i = 0; i < jumlahData; i++) {
-      System.out.print("Masukkan nama pasien: ");
-      dataPasien[0][i] = in.next();
-
-      dataPasien[1][i] = inputDokter(in, "Masukkan nama dokter: ");
-      dataPasien[2][i] = inputJam(in, "Masukkan jam masuk (format 24H HH:mm): ");
-      dataPasien[3][i] = (inputJam(in, "Masukkan jam keluar (format 24H HH:mm): "));
-
-      if (dataPasien[2][i].compareTo(dataPasien[3][i]) > 0) {
-        do {
+        while (dataPasien[i][2].compareTo(dataPasien[i][3]) > 0) {
           System.out.println("Jam keluar harus lebih besar dari jam masuk.");
-          dataPasien[3][i] = (inputJam(in, "Masukkan jam keluar (format 24H HH:mm): "));
-        } while (dataPasien[2][i].compareTo(dataPasien[3][i]) > 0);
-      }
+          dataPasien[i][3] = (inputJam(in, "Masukkan jam keluar (format 24H HH:mm): "));
+        }
 
-      System.out.println("\n Data berhasil dimasukkan.");
+        dataPasien[i][4] = Integer.toString(hitungHarga(dataPasien[i][2], dataPasien[i][3]));
+        System.out.println("Data berhasil dimasukkan.\n");
+        break;
+      }
     }
   }
 
@@ -104,8 +95,10 @@ public class kesehatan {
     boolean validateDokter = false;
 
     System.out.println("dokter yang tersedia: ");
-    for (String i : dataDokter) {
-      System.out.printf(" - Dr.%s \n", i.toUpperCase());
+    for (int i = 0; i < dataDokter.length; i++) {
+      if (!dataDokter[i].equals("")) {
+        System.out.printf(" - dr.%s \n", dataDokter[i]);
+      }
     }
 
     do {
@@ -145,13 +138,131 @@ public class kesehatan {
     return jam;
   }
 
-  // fungsi edit data - zulfa
-  public static void editData() {
+  public static void editData(Scanner in) {
+    System.out.println("\n====================================");
+    System.out.println("Edit Data Pasien");
+    System.out.println("====================================");
+    System.out.print("Masukkan nama pasien yang akan diubah: ");
+    String namaPasien = in.nextLine().trim();
+
+    boolean ditemukan = false;
+    for (int i = 0; i < dataPasien.length; i++) {
+      if (dataPasien[i][0] != null && dataPasien[i][0].equalsIgnoreCase(namaPasien)) {
+        ditemukan = true;
+        System.out.println("Data ditemukan. Pilih data yang ingin diubah:");
+        System.out.println("1. Nama pasien");
+        System.out.println("2. Dokter");
+        System.out.println("3. Jam masuk");
+        System.out.println("4. Jam keluar");
+        System.out.print("Pilihan: ");
+        int pilihan = in.nextInt();
+        in.nextLine(); // Membersihkan buffer
+
+        switch (pilihan) {
+          case 1:
+            System.out.print("Masukkan nama baru: ");
+            dataPasien[i][0] = in.nextLine().trim();
+            break;
+          case 2:
+            dataPasien[i][1] = inputDokter(in, "Masukkan nama dokter baru: ");
+            break;
+          case 3:
+            dataPasien[i][2] = inputJam(in, "Masukkan jam masuk baru (format 24H HH:mm): ");
+            break;
+          case 4:
+            dataPasien[i][3] = inputJam(in, "Masukkan jam keluar baru (format 24H HH:mm): ");
+            break;
+          default:
+            System.out.println("Pilihan tidak valid.");
+            return;
+        }
+
+        // Rehitung biaya jika jam berubah
+        if (pilihan == 3 || pilihan == 4) {
+          while (dataPasien[i][2].compareTo(dataPasien[i][3]) > 0) {
+            System.out.println("Jam keluar harus lebih besar dari jam masuk.");
+            dataPasien[i][3] = inputJam(in, "Masukkan jam keluar baru (format 24H HH:mm): ");
+          }
+          dataPasien[i][4] = Integer.toString(hitungHarga(dataPasien[i][2], dataPasien[i][3]));
+        }
+
+        System.out.println("Data berhasil diperbarui.");
+        return;
+      }
+    }
+
+    if (!ditemukan) {
+      System.out.println("Data pasien tidak ditemukan.");
+    }
+  }
+
+  public static void editDataDokter(Scanner in) {
+    System.out.println("\n====================================");
+    System.out.println("Edit Data Dokter");
+    System.out.println("1. tambah dokter");
+    System.out.println("2. hapus dokter");
+    System.out.println("====================================");
+    System.out.print("Pilih menu: ");
+    String pilihan = in.nextLine().trim();
+
+    String namaDokter;
+
+    switch (pilihan) {
+      case "1":
+        System.out.print("Masukkan nama dokter baru: ");
+        namaDokter = in.nextLine().trim().toLowerCase();
+
+        for (int i = 0; i < dataDokter.length; i++) {
+          if (dataDokter[i] == "") {
+            dataDokter[i] = namaDokter;
+            System.out.println("Data dokter berhasil ditambahkan.");
+            return;
+          }
+        }
+
+        break;
+
+      case "2":
+        System.out.print("Masukkan nama dokter yang akan dihapus: ");
+        namaDokter = in.nextLine().trim().toLowerCase();
+
+        for (int i = 0; i < dataDokter.length; i++) {
+          if (dataDokter[i] != null && dataDokter[i].equalsIgnoreCase(namaDokter)) {
+            dataDokter[i] = "";
+            System.out.println("Data dokter berhasil dihapus.");
+            return;
+          }
+        }
+        break;
+      case "3":
+        return;
+      default:
+        System.out.println("Menu tidak tersedia.");
+        break;
+    }
   }
 
   // fungsi hitung harga
-  public static int hitungHarga() {
-    return 0;
+  public static int hitungHarga(String waktuMasuk, String waktuKeluar) {
+    int jamMasuk = Integer.parseInt(waktuMasuk.substring(0, 2));
+    int menitMasuk = Integer.parseInt(waktuMasuk.substring(3, 5));
+    int jamKeluar = Integer.parseInt(waktuKeluar.substring(0, 2));
+    int menitKeluar = Integer.parseInt(waktuKeluar.substring(3, 5));
+
+    int totalMenitMasuk = jamMasuk * 60 + menitMasuk;
+    int totalmenitKeluar = jamKeluar * 60 + menitKeluar;
+    int durasi = totalmenitKeluar - totalMenitMasuk;
+
+    int biaya = 0;
+    if (durasi > 0) {
+      biaya = 50000;
+      if (durasi > 60) {
+        int menitTambahan = durasi - 60;
+        biaya += (int) Math.ceil(menitTambahan / 30.0) * 10000;
+      }
+    }
+
+    return biaya;
   }
 
   // fungsi tampil data
@@ -160,6 +271,34 @@ public class kesehatan {
 
   // fungsi tampil data bayaran terbesar
   public static void tampilTerbesar() {
-  }
+    int maxFee = 0;
 
+    for (int i = 0; i < dataPasien.length; i++) {
+      if (dataPasien[i][4] == null) {
+        continue;
+      } else {
+        int fee = Integer.parseInt(dataPasien[i][4]);
+        if (fee > maxFee) {
+          maxFee = fee;
+        }
+      }
+    }
+
+    System.out.println("\n====================================");
+    System.out.println("Pasien dengan biaya konsultasi terbesar:");
+    for (int i = 0; i < dataPasien.length; i++) {
+      if (dataPasien[i][4] == null) {
+        continue;
+      } else {
+        int fee = Integer.parseInt(dataPasien[i][4]);
+        if (fee == maxFee) {
+          System.out.println("\nNama: " + dataPasien[i][0]);
+          System.out.println("Dokter: " + dataPasien[i][1]);
+          System.out.println("Waktu Mulai: " + dataPasien[i][2]);
+          System.out.println("Waktu Selesai: " + dataPasien[i][3]);
+          System.out.println("Biaya: " + dataPasien[i][4]);
+        }
+      }
+    }
+  }
 }
