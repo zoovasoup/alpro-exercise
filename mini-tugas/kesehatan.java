@@ -3,7 +3,7 @@ import java.util.Scanner;
 @SuppressWarnings("resource") // Suppress resource warnings.
 
 public class kesehatan {
-  public static String[][] dataPasien = new String[4][10];
+  public static String[][] dataPasien = new String[15][5];
   public static String[] dataDokter = new String[] {
       "budi",
       "citra",
@@ -13,6 +13,7 @@ public class kesehatan {
   };
 
   public static void main(String[] args) {
+    // dataFill();
 
     while (true) {
       Scanner in = new Scanner(System.in);
@@ -32,12 +33,16 @@ public class kesehatan {
           editData(in);
           break;
         case "4":
-          tampilData();
+          hapusData(in);
           break;
         case "5":
-          tampilTerbesar();
+          tampilData();
           break;
         case "6":
+          tampilTerbesar();
+          break;
+        case "7":
+          System.out.println("\nTerima kasih telah menggunakan program ini.");
           return;
         default:
           System.out.println("Menu tidak tersedia");
@@ -46,9 +51,9 @@ public class kesehatan {
     }
   }
 
-  // fungsi tampilan menu
+  // procedure tampilan menu
   public static void menu() {
-    System.out.print("\033[H\033[2J");
+    // System.out.print("\033[H\033[2J");
     System.out.flush();
     System.out.println("\n====================================");
     System.out.println("========== Sistem Kesehatan ========");
@@ -56,10 +61,11 @@ public class kesehatan {
     System.out.println("1. Input data");
     System.out.println("2. Edit data dokter");
     System.out.println("3. Edit data pasien");
-    System.out.println("4. Tampil data");
-    System.out.println("5. Tampil bayaran terbesar");
-    System.out.println("6. Keluar");
-    System.out.println("====================================");
+    System.out.println("4. hapus data pasien");
+    System.out.println("5. Tampil data");
+    System.out.println("6. Tampil bayaran terbesar");
+    System.out.println("7. Keluar");
+    System.out.println("================");
   }
 
   // fungsi input data
@@ -84,7 +90,7 @@ public class kesehatan {
         }
 
         dataPasien[i][4] = Integer.toString(hitungHarga(dataPasien[i][2], dataPasien[i][3]));
-        System.out.println("Data berhasil dimasukkan.\n");
+        System.out.println("\nData berhasil dimasukkan.");
         break;
       }
     }
@@ -128,7 +134,7 @@ public class kesehatan {
     do {
       System.out.print(message);
       jam = in.next();
-      validateJam = jam.matches("^([01]?[0-9]|2[0-3]):[0-5][0-9]$");
+      validateJam = jam.matches("^([01][0-9]|2[0-3]):[0-5][0-9]$");
 
       if (!validateJam) {
         System.out.println("format jam salah");
@@ -156,7 +162,7 @@ public class kesehatan {
         System.out.println("4. Jam keluar");
         System.out.print("Pilihan: ");
         int pilihan = in.nextInt();
-        in.nextLine(); // Membersihkan buffer
+        in.nextLine();
 
         switch (pilihan) {
           case 1:
@@ -177,7 +183,6 @@ public class kesehatan {
             return;
         }
 
-        // Rehitung biaya jika jam berubah
         if (pilihan == 3 || pilihan == 4) {
           while (dataPasien[i][2].compareTo(dataPasien[i][3]) > 0) {
             System.out.println("Jam keluar harus lebih besar dari jam masuk.");
@@ -194,6 +199,26 @@ public class kesehatan {
     if (!ditemukan) {
       System.out.println("Data pasien tidak ditemukan.");
     }
+  }
+
+  public static void hapusData(Scanner in) {
+    System.out.println("\n====================================");
+    System.out.println("Hapus Data Pasien");
+    System.out.println("====================================");
+    System.out.print("Masukkan nama pasien yang akan dihapus: ");
+    String namaPasien = in.nextLine().trim();
+    boolean hapus = false;
+
+    for (int i = 0; i < dataPasien.length; i++) {
+      if (dataPasien[i][0] != null && dataPasien[i][0].equalsIgnoreCase(namaPasien)) {
+        dataPasien[i] = new String[5];
+        System.out.println("Data pasien berhasil dihapus.");
+        hapus = true;
+      }
+    }
+
+    if (!hapus)
+      System.out.println("Data pasien tidak ditemukan.");
   }
 
   public static void editDataDokter(Scanner in) {
@@ -213,7 +238,7 @@ public class kesehatan {
         namaDokter = in.nextLine().trim().toLowerCase();
 
         for (int i = 0; i < dataDokter.length; i++) {
-          if (dataDokter[i] == "") {
+          if (dataDokter[i] == "" || dataDokter[i] == null) {
             dataDokter[i] = namaDokter;
             System.out.println("Data dokter berhasil ditambahkan.");
             return;
@@ -265,8 +290,49 @@ public class kesehatan {
     return biaya;
   }
 
-  // fungsi tampil data
+  // procedure tampil data
   public static void tampilData() {
+    Scanner input = new Scanner(System.in);
+    System.out.println("Menu:");
+    System.out.println("1. Tampilkan seluruh data pasien");
+    System.out.println("2. Tampilkan data pasien tertentu");
+    System.out.print("Pilihan: ");
+    int pilihan = input.nextInt();
+
+    if (pilihan == 1) { // tampilan seluruh data
+      for (int i = 0; i < dataPasien.length; i++) {
+        if (dataPasien[i] != null && dataPasien[i][0] != null) {
+          System.out.println("\nNama pasien: " + dataPasien[i][0]);
+          System.out.println("Nama dokter: " + dataPasien[i][1]);
+          System.out.println("Jam masuk: " + dataPasien[i][2]);
+          System.out.println("Jam keluar: " + dataPasien[i][3]);
+          System.out.println("Total biaya: " + dataPasien[i][4]);
+          System.out.println("-------------------");
+        }
+      }
+    } else if (pilihan == 2) { // tampilan dataPasien pasien berdasarkan nama
+
+      System.out.print("Masukkan nama pasien: ");
+      String namaCari = input.next();
+      boolean found = false;
+
+      for (int i = 0; i < dataPasien.length; i++) {
+        if (dataPasien[i] != null && dataPasien[i][0] != null && dataPasien[i][0].equalsIgnoreCase(namaCari)) {
+          System.out.println("\nNama pasien: " + dataPasien[i][0]);
+          System.out.println("Nama dokter: " + dataPasien[i][1]);
+          System.out.println("Jam masuk: " + dataPasien[i][2]);
+          System.out.println("Jam keluar: " + dataPasien[i][3]);
+          System.out.println("Total biaya: " + dataPasien[i][4]);
+          found = true;
+        }
+      }
+
+      if (!found) {
+        System.out.println("\nData pasien tidak ditemukan.");
+      }
+    } else {
+      System.out.println("\nPilihan tidak valid.");
+    }
   }
 
   // fungsi tampil data bayaran terbesar
@@ -300,5 +366,43 @@ public class kesehatan {
         }
       }
     }
+  }
+
+  // untuk dummy data
+  public static void dataFill() {
+    // Data pasien 0
+    dataPasien[0][0] = "Riyan";
+    dataPasien[0][1] = "dani";
+    dataPasien[0][2] = "08:15";
+    dataPasien[0][3] = "09:30";
+    dataPasien[0][4] = "50000";
+
+    // dataPasien pasien 1
+    dataPasien[2][0] = "Andi";
+    dataPasien[2][1] = "budi";
+    dataPasien[2][2] = "08:20";
+    dataPasien[2][3] = "10:00";
+    dataPasien[2][4] = "70000";
+
+    // dataPasien pasien 3
+    dataPasien[3][0] = "Siti";
+    dataPasien[3][1] = "citra";
+    dataPasien[3][2] = "09:00";
+    dataPasien[3][3] = "11:00";
+    dataPasien[3][4] = "70000";
+
+    // dataPasien pasien 5
+    dataPasien[5][0] = "Rudi";
+    dataPasien[5][1] = "dani";
+    dataPasien[5][2] = "10:30";
+    dataPasien[5][3] = "12:00";
+    dataPasien[5][4] = "70000";
+
+    // dataPasien pasien 8
+    dataPasien[8][0] = "Maya";
+    dataPasien[8][1] = "citra";
+    dataPasien[8][2] = "11:15";
+    dataPasien[8][3] = "13:00";
+    dataPasien[8][4] = "70000";
   }
 }
